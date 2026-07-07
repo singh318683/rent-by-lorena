@@ -420,7 +420,7 @@
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-const STORAGE_KEY = 'rbl_dresses_v1';
+const STORAGE_KEY = 'rbl_dresses_v2';
 const INQUIRY_KEY = 'rbl_inquiries_v1';
 const ADMIN_PASSWORD = 'Lorena@2026';
 
@@ -430,14 +430,7 @@ const dressSVG = `<svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" 
   <path d="M36 34 Q50 44 64 34" />
 </svg>`;
 
-const defaultDresses = [
-  {id:'d1', name:'Midnight Silk Gown', designer:'Atelier Noir', category:'Gala', color:'Deep Navy', price:145, sizes:['XS','S','M'], desc:'A floor-length silk gown with a subtle cowl back — understated elegance for black-tie evenings.'},
-  {id:'d2', name:'Champagne Chiffon', designer:'Maison Belle', category:'Wedding', color:'Champagne', price:165, sizes:['S','M','L'], desc:'Soft layered chiffon in a warm champagne tone, perfect for daytime celebrations and guest-of-honor moments.'},
-  {id:'d3', name:'Emerald Column Dress', designer:'Verde Studio', category:'Gala', color:'Emerald', price:130, sizes:['XS','S','M','L'], desc:'A sleek column silhouette in rich emerald satin, with a low back and delicate straps.'},
-  {id:'d4', name:'Rose Garden Wrap', designer:'Fleur & Co.', category:'Cocktail', color:'Blush Pink', price:95, sizes:['S','M'], desc:'A romantic wrap dress with hand-embroidered floral detail, ideal for showers and garden events.'},
-  {id:'d5', name:'Onyx Beaded Sheath', designer:'Atelier Noir', category:'Gala', color:'Black', price:180, sizes:['XS','S','M'], desc:'Fully hand-beaded sheath dress that catches the light with every step — a true showstopper.'},
-  {id:'d6', name:'Ivory Lace Overlay', designer:'Maison Belle', category:'Wedding', color:'Ivory', price:170, sizes:['S','M','L'], desc:'Delicate lace overlay atop a soft satin slip, for weddings, engagements, and formal receptions.'},
-];
+const defaultDresses = [];
 
 function loadDresses(){
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -455,8 +448,9 @@ let dresses = loadDresses();
 let activeCategory = 'All';
 
 function renderFilters(){
-  const cats = ['All', ...new Set(dresses.map(d=>d.category))];
   const el = document.getElementById('filters');
+  if(dresses.length === 0){ el.innerHTML = ''; return; }
+  const cats = ['All', ...new Set(dresses.map(d=>d.category))];
   el.innerHTML = cats.map(c => `<button class="chip ${c===activeCategory?'active':''}" data-cat="${c}">${c}</button>`).join('');
   el.querySelectorAll('.chip').forEach(btn=>{
     btn.addEventListener('click', ()=>{ activeCategory = btn.dataset.cat; renderFilters(); renderGrid(); });
@@ -467,7 +461,7 @@ function renderGrid(){
   const grid = document.getElementById('grid');
   const list = activeCategory === 'All' ? dresses : dresses.filter(d=>d.category===activeCategory);
   if(list.length === 0){
-    grid.innerHTML = `<div class="empty-state">No dresses in this category yet. Check back soon.</div>`;
+    grid.innerHTML = `<div class="empty-state">The collection is being curated — check back soon.</div>`;
     return;
   }
   grid.innerHTML = list.map(d => `
