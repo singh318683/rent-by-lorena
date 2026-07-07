@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rent by Lorena — Curated Dress Rentals</title>
+<meta name="description" content="Rent by Lorena — a curated collection of dresses for your next moment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1815;
+    --ivory:#F7F3ED;
+    --gold:#B8935F;
+    --gold-light:#D9BD91;
+    --blush:#E8D9CE;
+    --charcoal:#2B2926;
+    --line: rgba(26,24,21,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--charcoal);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Playfair Display',serif;}
+  a{color:inherit;}
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(247,243,237,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:1200px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:600;
+    letter-spacing:0.3px;
+  }
+  .brand em{font-style:italic; color:var(--gold);}
+  .nav-links{display:flex; gap:28px; align-items:center; font-size:0.92rem;}
+  .nav-links a{text-decoration:none; color:var(--charcoal); opacity:0.75; transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;}
+  .admin-gear{
+    cursor:pointer; opacity:0.35; font-size:1.1rem; background:none; border:none;
+    transition:opacity .2s; padding:4px;
+  }
+  .admin-gear:hover{opacity:0.8;}
+
+  /* Hero */
+  .hero{
+    max-width:1200px; margin:0 auto;
+    padding:80px 32px 60px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;
+  }
+  .hero-eyebrow{
+    text-transform:uppercase; letter-spacing:2.5px; font-size:0.75rem;
+    color:var(--gold); font-weight:600; margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:3.4rem; line-height:1.08; font-weight:500; margin:0 0 22px;
+  }
+  .hero h1 i{color:var(--gold);}
+  .hero p{
+    font-size:1.05rem; line-height:1.7; opacity:0.75; max-width:440px; margin-bottom:32px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:15px 30px; border-radius:2px; text-decoration:none;
+    font-size:0.9rem; letter-spacing:0.5px; font-weight:600; cursor:pointer;
+    border:1px solid var(--ink); transition:all .25s;
+  }
+  .btn-primary{background:var(--ink); color:var(--ivory);}
+  .btn-primary:hover{background:transparent; color:var(--ink);}
+  .btn-ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  .hero-visual{
+    position:relative; aspect-ratio:3/4; border-radius:2px;
+    background:linear-gradient(160deg, var(--blush), var(--gold-light));
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero-visual::before{
+    content:'';
+    position:absolute; inset:18px;
+    border:1px solid rgba(26,24,21,0.25);
+  }
+  .hero-visual svg{width:55%; height:55%; opacity:0.9;}
+
+  /* Section shell */
+  section{max-width:1200px; margin:0 auto; padding:70px 32px;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:40px; gap:24px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:2rem; font-weight:500; margin:0;}
+  .section-head .eyebrow{
+    text-transform:uppercase; letter-spacing:2px; font-size:0.72rem;
+    color:var(--gold); font-weight:600; display:block; margin-bottom:10px;
+  }
+
+  /* Filters */
+  .filters{
+    display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px;
+  }
+  .chip{
+    padding:9px 18px; border:1px solid var(--line); border-radius:20px;
+    background:transparent; font-size:0.85rem; cursor:pointer; transition:all .2s;
+    color:var(--charcoal);
+  }
+  .chip.active, .chip:hover{background:var(--ink); color:var(--ivory); border-color:var(--ink);}
+
+  /* Grid */
+  .grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;
+  }
+  .card{
+    position:relative; background:#fff; border:1px solid var(--line);
+    transition:box-shadow .35s, transform .35s; cursor:pointer;
+  }
+  .card:hover{
+    box-shadow: 0 24px 48px -18px rgba(26,24,21,0.25);
+    transform:translateY(-4px);
+  }
+  .card:hover .card-img::after{opacity:1;}
+  .card-img{
+    aspect-ratio:3/4; background:linear-gradient(150deg,var(--blush),#f0e6da);
+    display:flex; align-items:center; justify-content:center; position:relative;
+    overflow:hidden;
+  }
+  .card-img::after{
+    content:''; position:absolute; inset:10px; border:1px solid var(--gold);
+    opacity:0; transition:opacity .35s; pointer-events:none;
+  }
+  .card-img svg{width:40%; opacity:0.85;}
+  .card-body{padding:20px 20px 22px;}
+  .card-tag{
+    font-size:0.68rem; text-transform:uppercase; letter-spacing:1.5px;
+    color:var(--gold); font-weight:600; margin-bottom:8px; display:block;
+  }
+  .card-name{font-size:1.2rem; margin:0 0 6px; font-weight:500;}
+  .card-meta{font-size:0.85rem; opacity:0.6; margin-bottom:14px;}
+  .card-price{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:14px; border-top:1px solid var(--line);
+  }
+  .price-amt{font-family:'Playfair Display',serif; font-size:1.3rem;}
+  .price-amt span{font-size:0.75rem; opacity:0.55; font-family:'Inter',sans-serif;}
+  .size-tags{display:flex; gap:6px;}
+  .size-tag{
+    font-size:0.7rem; border:1px solid var(--line); padding:2px 7px; border-radius:10px; opacity:0.6;
+  }
+  .empty-state{
+    text-align:center; padding:80px 20px; opacity:0.6; grid-column:1/-1;
+  }
+
+  /* Modal (dress detail) */
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(26,24,21,0.55);
+    z-index:1000; align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--ivory); max-width:920px; width:100%; max-height:88vh; overflow:auto;
+    display:grid; grid-template-columns:1fr 1fr; position:relative;
+  }
+  .modal-close{
+    position:absolute; top:16px; right:16px; background:#fff; border:none;
+    width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:1.1rem; z-index:5;
+  }
+  .modal-img{
+    background:linear-gradient(150deg,var(--blush),#f0e6da);
+    display:flex; align-items:center; justify-content:center; min-height:400px;
+  }
+  .modal-img svg{width:45%;}
+  .modal-info{padding:40px;}
+  .modal-info h3{font-size:1.7rem; margin:0 0 6px; font-weight:500;}
+  .modal-designer{color:var(--gold); font-size:0.85rem; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:20px; display:block;}
+  .modal-desc{font-size:0.95rem; line-height:1.7; opacity:0.8; margin-bottom:24px;}
+  .modal-facts{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:28px; font-size:0.88rem;}
+  .modal-facts div span{display:block; opacity:0.55; font-size:0.72rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:3px;}
+  .modal-price-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:24px;
+  }
+
+  /* Inquiry form */
+  .inquiry-form{display:flex; flex-direction:column; gap:12px;}
+  .inquiry-form input, .inquiry-form select, .inquiry-form textarea{
+    padding:12px 14px; border:1px solid var(--line); background:#fff;
+    font-family:'Inter',sans-serif; font-size:0.9rem; border-radius:2px;
+  }
+  .inquiry-form textarea{resize:vertical; min-height:70px;}
+  .inquiry-form label{font-size:0.78rem; opacity:0.65; margin-bottom:-6px;}
+  .form-msg{font-size:0.85rem; padding:10px 0; display:none;}
+  .form-msg.show{display:block;}
+  .form-msg.success{color:#3d6b3d;}
+
+  /* Admin panel */
+  .admin-panel{
+    display:none; position:fixed; inset:0; background:rgba(26,24,21,0.6);
+    z-index:2000; align-items:flex-start; justify-content:center; padding:40px 20px; overflow:auto;
+  }
+  .admin-panel.open{display:flex;}
+  .admin-box{
+    background:var(--ivory); max-width:720px; width:100%; padding:40px; position:relative; margin-bottom:40px;
+  }
+  .admin-box h2{margin-top:0;}
+  .admin-login{max-width:320px; margin:0 auto;}
+  .admin-form{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;}
+  .admin-form input, .admin-form select, .admin-form textarea{
+    padding:11px 13px; border:1px solid var(--line); font-family:'Inter',sans-serif; font-size:0.88rem;
+  }
+  .admin-form textarea{grid-column:1/-1; min-height:60px; resize:vertical;}
+  .admin-form .full{grid-column:1/-1;}
+  .admin-list{margin-top:30px; display:flex; flex-direction:column; gap:10px;}
+  .admin-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 14px; background:#fff; border:1px solid var(--line); font-size:0.88rem;
+  }
+  .admin-row button{
+    background:none; border:none; cursor:pointer; color:#a33; font-size:0.85rem;
+  }
+  .admin-inquiries{margin-top:16px; display:flex; flex-direction:column; gap:8px; max-height:260px; overflow:auto;}
+  .inq-row{padding:10px 14px; background:#fff; border:1px solid var(--line); font-size:0.85rem;}
+  .inq-row b{display:block; margin-bottom:2px;}
+  .tabs{display:flex; gap:6px; margin-bottom:24px;}
+  .tab-btn{
+    padding:9px 16px; border:1px solid var(--line); background:transparent; cursor:pointer; font-size:0.85rem;
+  }
+  .tab-btn.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+
+  footer{
+    border-top:1px solid var(--line); padding:36px 32px; text-align:center;
+    font-size:0.82rem; opacity:0.55;
+  }
+
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr; padding-top:50px;}
+    .hero h1{font-size:2.3rem;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .modal{grid-template-columns:1fr;}
+    .modal-img{min-height:260px;}
+  }
+  @media (max-width:560px){
+    .grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .admin-form{grid-template-columns:1fr;}
+  }
+
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">Rent by <em>Lorena</em></div>
+    <div class="nav-links">
+      <a href="#collection">Collection</a>
+      <a href="#how">How it Works</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="admin-gear" id="adminGearBtn" aria-label="Admin">⚙</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="hero-eyebrow">Curated · Rare · Yours for the Occasion</span>
+    <h1>Wear something <i>extraordinary</i>, without owning it forever.</h1>
+    <p>A hand-picked wardrobe of statement dresses — for weddings, galas, and nights you'll want to remember. Browse the collection, and reserve yours in minutes.</p>
+    <a href="#collection" class="btn btn-primary">Browse the Collection</a>
+  </div>
+  <div class="hero-visual">
+    <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#1A1815" stroke-width="1.2">
+      <path d="M50 8 C44 8 40 14 40 20 L36 34 L20 100 Q18 112 30 118 L70 118 Q82 112 80 100 L64 34 L60 20 C60 14 56 8 50 8 Z"/>
+      <path d="M40 20 Q50 28 60 20" />
+      <path d="M36 34 Q50 44 64 34" />
+    </svg>
+  </div>
+</section>
+
+<section id="collection">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">The Collection</span>
+      <h2>Available Now</h2>
+    </div>
+  </div>
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="how">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">Simple by Design</span>
+      <h2>How it Works</h2>
+    </div>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);">
+    <div>
+      <h3 class="serif" style="font-size:1.3rem;">1. Browse & Choose</h3>
+      <p style="opacity:0.75; line-height:1.7; font-size:0.95rem;">Explore the collection and find the dress for your moment — size, style, and occasion all in view.</p>
+    </div>
+    <div>
+      <h3 class="serif" style="font-size:1.3rem;">2. Send an Inquiry</h3>
+      <p style="opacity:0.75; line-height:1.7; font-size:0.95rem;">Tell us your dates and size. We'll confirm availability and next steps directly by email.</p>
+    </div>
+    <div>
+      <h3 class="serif" style="font-size:1.3rem;">3. Wear & Return</h3>
+      <p style="opacity:0.75; line-height:1.7; font-size:0.95rem;">Your dress arrives ready to wear. Enjoy the occasion, then send it back — no dry cleaning needed.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">Get in Touch</span>
+      <h2>Have a Question?</h2>
+    </div>
+  </div>
+  <div style="max-width:480px;">
+    <p style="opacity:0.75; margin-bottom:20px;">Reach out any time — we typically respond within a day.</p>
+    <a class="btn btn-ghost" href="mailto:lorenamnevarez@gmail.com">Email lorenamnevarez@gmail.com</a>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> Rent by Lorena. All dresses shown are part of a curated rental collection.
+</footer>
+
+<!-- Dress Detail Modal -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <button class="modal-close" id="closeDetail">✕</button>
+    <div class="modal-img" id="modalImg"></div>
+    <div class="modal-info">
+      <span class="modal-designer" id="modalTag"></span>
+      <h3 id="modalName"></h3>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-facts">
+        <div><span>Sizes</span><b id="modalSizes"></b></div>
+        <div><span>Color</span><b id="modalColor"></b></div>
+      </div>
+      <div class="modal-price-row">
+        <div class="price-amt" id="modalPrice"></div>
+        <span style="font-size:0.8rem; opacity:0.6;">per rental</span>
+      </div>
+      <div id="formMsg" class="form-msg"></div>
+      <form class="inquiry-form" id="inquiryForm">
+        <label>Your Name</label>
+        <input type="text" id="inqName" required>
+        <label>Your Email</label>
+        <input type="email" id="inqEmail" required>
+        <label>Preferred Size</label>
+        <select id="inqSize"></select>
+        <label>Dates Needed</label>
+        <input type="text" id="inqDates" placeholder="e.g. Aug 12–14" required>
+        <label>Message (optional)</label>
+        <textarea id="inqMessage" placeholder="Anything else we should know?"></textarea>
+        <button type="submit" class="btn btn-primary" style="margin-top:6px;">Send Inquiry</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-box">
+    <button class="modal-close" id="closeAdmin">✕</button>
+
+    <div id="adminLoginView" class="admin-login">
+      <h2>Admin Login</h2>
+      <input type="password" id="adminPassword" placeholder="Password" style="width:100%; padding:12px; margin-bottom:14px; border:1px solid var(--line);">
+      <button class="btn btn-primary" id="adminLoginBtn" style="width:100%; justify-content:center;">Log In</button>
+      <div id="adminLoginError" style="color:#a33; font-size:0.85rem; margin-top:10px; display:none;">Incorrect password.</div>
+    </div>
+
+    <div id="adminMainView" style="display:none;">
+      <h2>Manage Rent by Lorena</h2>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="dresses">Dresses</button>
+        <button class="tab-btn" data-tab="inquiries">Inquiries</button>
+      </div>
+
+      <div id="tab-dresses">
+        <h3 style="font-size:1rem; margin-bottom:14px;">Add a Dress</h3>
+        <div class="admin-form">
+          <input type="text" id="fName" placeholder="Dress name">
+          <input type="text" id="fDesigner" placeholder="Designer / Label">
+          <input type="text" id="fColor" placeholder="Color">
+          <input type="text" id="fCategory" placeholder="Category (e.g. Gala, Wedding)">
+          <input type="number" id="fPrice" placeholder="Price per rental ($)">
+          <input type="text" id="fSizes" placeholder="Sizes (comma separated, e.g. XS,S,M)">
+          <textarea id="fDesc" placeholder="Description"></textarea>
+        </div>
+        <button class="btn btn-primary" id="addDressBtn">Add Dress</button>
+        <div class="admin-list" id="adminDressList"></div>
+      </div>
+
+      <div id="tab-inquiries" style="display:none;">
+        <h3 style="font-size:1rem; margin-bottom:14px;">Inquiries Received</h3>
+        <div class="admin-inquiries" id="adminInquiriesList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const STORAGE_KEY = 'rbl_dresses_v1';
+const INQUIRY_KEY = 'rbl_inquiries_v1';
+const ADMIN_PASSWORD = 'Lorena@2026';
+
+const dressSVG = `<svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#1A1815" stroke-width="1.2">
+  <path d="M50 8 C44 8 40 14 40 20 L36 34 L20 100 Q18 112 30 118 L70 118 Q82 112 80 100 L64 34 L60 20 C60 14 56 8 50 8 Z"/>
+  <path d="M40 20 Q50 28 60 20" />
+  <path d="M36 34 Q50 44 64 34" />
+</svg>`;
+
+const defaultDresses = [
+  {id:'d1', name:'Midnight Silk Gown', designer:'Atelier Noir', category:'Gala', color:'Deep Navy', price:145, sizes:['XS','S','M'], desc:'A floor-length silk gown with a subtle cowl back — understated elegance for black-tie evenings.'},
+  {id:'d2', name:'Champagne Chiffon', designer:'Maison Belle', category:'Wedding', color:'Champagne', price:165, sizes:['S','M','L'], desc:'Soft layered chiffon in a warm champagne tone, perfect for daytime celebrations and guest-of-honor moments.'},
+  {id:'d3', name:'Emerald Column Dress', designer:'Verde Studio', category:'Gala', color:'Emerald', price:130, sizes:['XS','S','M','L'], desc:'A sleek column silhouette in rich emerald satin, with a low back and delicate straps.'},
+  {id:'d4', name:'Rose Garden Wrap', designer:'Fleur & Co.', category:'Cocktail', color:'Blush Pink', price:95, sizes:['S','M'], desc:'A romantic wrap dress with hand-embroidered floral detail, ideal for showers and garden events.'},
+  {id:'d5', name:'Onyx Beaded Sheath', designer:'Atelier Noir', category:'Gala', color:'Black', price:180, sizes:['XS','S','M'], desc:'Fully hand-beaded sheath dress that catches the light with every step — a true showstopper.'},
+  {id:'d6', name:'Ivory Lace Overlay', designer:'Maison Belle', category:'Wedding', color:'Ivory', price:170, sizes:['S','M','L'], desc:'Delicate lace overlay atop a soft satin slip, for weddings, engagements, and formal receptions.'},
+];
+
+function loadDresses(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(!raw){ localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultDresses)); return defaultDresses; }
+  try{ return JSON.parse(raw); } catch(e){ return defaultDresses; }
+}
+function saveDresses(list){ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+function loadInquiries(){
+  const raw = localStorage.getItem(INQUIRY_KEY);
+  try{ return raw ? JSON.parse(raw) : []; } catch(e){ return []; }
+}
+function saveInquiries(list){ localStorage.setItem(INQUIRY_KEY, JSON.stringify(list)); }
+
+let dresses = loadDresses();
+let activeCategory = 'All';
+
+function renderFilters(){
+  const cats = ['All', ...new Set(dresses.map(d=>d.category))];
+  const el = document.getElementById('filters');
+  el.innerHTML = cats.map(c => `<button class="chip ${c===activeCategory?'active':''}" data-cat="${c}">${c}</button>`).join('');
+  el.querySelectorAll('.chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ activeCategory = btn.dataset.cat; renderFilters(); renderGrid(); });
+  });
+}
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  const list = activeCategory === 'All' ? dresses : dresses.filter(d=>d.category===activeCategory);
+  if(list.length === 0){
+    grid.innerHTML = `<div class="empty-state">No dresses in this category yet. Check back soon.</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(d => `
+    <div class="card" data-id="${d.id}">
+      <div class="card-img">${dressSVG}</div>
+      <div class="card-body">
+        <span class="card-tag">${d.designer}</span>
+        <h3 class="card-name">${d.name}</h3>
+        <div class="card-meta">${d.category} · ${d.color}</div>
+        <div class="card-price">
+          <div class="price-amt">$${d.price}<span> /rental</span></div>
+          <div class="size-tags">${d.sizes.map(s=>`<span class="size-tag">${s}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', ()=> openDetail(card.dataset.id));
+  });
+}
+
+function openDetail(id){
+  const d = dresses.find(x=>x.id===id);
+  if(!d) return;
+  document.getElementById('modalImg').innerHTML = dressSVG;
+  document.getElementById('modalTag').textContent = d.designer;
+  document.getElementById('modalName').textContent = d.name;
+  document.getElementById('modalDesc').textContent = d.desc;
+  document.getElementById('modalSizes').textContent = d.sizes.join(', ');
+  document.getElementById('modalColor').textContent = d.color;
+  document.getElementById('modalPrice').textContent = `$${d.price}`;
+  document.getElementById('inqSize').innerHTML = d.sizes.map(s=>`<option value="${s}">${s}</option>`).join('');
+  document.getElementById('formMsg').classList.remove('show');
+  document.getElementById('inquiryForm').reset();
+  document.getElementById('inquiryForm').dataset.dressId = d.id;
+  document.getElementById('inquiryForm').dataset.dressName = d.name;
+  document.getElementById('detailModal').classList.add('open');
+}
+document.getElementById('closeDetail').addEventListener('click', ()=>{
+  document.getElementById('detailModal').classList.remove('open');
+});
+document.getElementById('detailModal').addEventListener('click', (e)=>{
+  if(e.target.id === 'detailModal') document.getElementById('detailModal').classList.remove('open');
+});
+
+document.getElementById('inquiryForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const dressId = this.dataset.dressId;
+  const dressName = this.dataset.dressName;
+  const inquiry = {
+    id: 'inq_' + Date.now(),
+    dressId, dressName,
+    name: document.getElementById('inqName').value,
+    email: document.getElementById('inqEmail').value,
+    size: document.getElementById('inqSize').value,
+    dates: document.getElementById('inqDates').value,
+    message: document.getElementById('inqMessage').value,
+    submittedAt: new Date().toISOString()
+  };
+  const list = loadInquiries();
+  list.unshift(inquiry);
+  saveInquiries(list);
+
+  // Open a pre-filled mailto to Lorena as the actual delivery mechanism
+  const subject = encodeURIComponent(`Rental Inquiry: ${dressName}`);
+  const body = encodeURIComponent(
+    `Dress: ${dressName}\nSize: ${inquiry.size}\nDates: ${inquiry.dates}\n\nFrom: ${inquiry.name} (${inquiry.email})\n\nMessage:\n${inquiry.message || '(none)'}`
+  );
+  window.location.href = `mailto:lorenamnevarez@gmail.com?subject=${subject}&body=${body}`;
+
+  const msg = document.getElementById('formMsg');
+  msg.textContent = 'Your email app should now open with the inquiry pre-filled — just hit send!';
+  msg.classList.add('show','success');
+});
+
+// ===== Admin =====
+const adminGearBtn = document.getElementById('adminGearBtn');
+const adminPanel = document.getElementById('adminPanel');
+adminGearBtn.addEventListener('click', ()=>{
+  adminPanel.classList.add('open');
+  document.getElementById('adminLoginView').style.display = 'block';
+  document.getElementById('adminMainView').style.display = 'none';
+  document.getElementById('adminPassword').value = '';
+  document.getElementById('adminLoginError').style.display = 'none';
+});
+document.getElementById('closeAdmin').addEventListener('click', ()=> adminPanel.classList.remove('open'));
+adminPanel.addEventListener('click', (e)=>{ if(e.target.id==='adminPanel') adminPanel.classList.remove('open'); });
+
+document.getElementById('adminLoginBtn').addEventListener('click', ()=>{
+  const pw = document.getElementById('adminPassword').value;
+  if(pw === ADMIN_PASSWORD){
+    document.getElementById('adminLoginView').style.display = 'none';
+    document.getElementById('adminMainView').style.display = 'block';
+    renderAdminDressList();
+    renderAdminInquiries();
+  } else {
+    document.getElementById('adminLoginError').style.display = 'block';
+  }
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-dresses').style.display = btn.dataset.tab==='dresses' ? 'block':'none';
+    document.getElementById('tab-inquiries').style.display = btn.dataset.tab==='inquiries' ? 'block':'none';
+  });
+});
+
+document.getElementById('addDressBtn').addEventListener('click', ()=>{
+  const name = document.getElementById('fName').value.trim();
+  const designer = document.getElementById('fDesigner').value.trim() || 'Rent by Lorena';
+  const color = document.getElementById('fColor').value.trim();
+  const category = document.getElementById('fCategory').value.trim() || 'Other';
+  const price = parseFloat(document.getElementById('fPrice').value) || 0;
+  const sizes = document.getElementById('fSizes').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const desc = document.getElementById('fDesc').value.trim();
+  if(!name || sizes.length===0 || price<=0){
+    alert('Please fill in at least the name, price, and sizes.');
+    return;
+  }
+  const newDress = { id:'d'+Date.now(), name, designer, color, category, price, sizes, desc };
+  dresses.push(newDress);
+  saveDresses(dresses);
+  ['fName','fDesigner','fColor','fCategory','fPrice','fSizes','fDesc'].forEach(id=>document.getElementById(id).value='');
+  renderAdminDressList();
+  renderFilters();
+  renderGrid();
+});
+
+function renderAdminDressList(){
+  const el = document.getElementById('adminDressList');
+  el.innerHTML = dresses.map(d => `
+    <div class="admin-row">
+      <span>${d.name} — $${d.price} (${d.sizes.join(',')})</span>
+      <button data-id="${d.id}" class="del-dress">Remove</button>
+    </div>
+  `).join('');
+  el.querySelectorAll('.del-dress').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      dresses = dresses.filter(d=>d.id!==btn.dataset.id);
+      saveDresses(dresses);
+      renderAdminDressList();
+      renderFilters();
+      renderGrid();
+    });
+  });
+}
+
+function renderAdminInquiries(){
+  const list = loadInquiries();
+  const el = document.getElementById('adminInquiriesList');
+  if(list.length===0){ el.innerHTML = `<div style="opacity:0.6; font-size:0.85rem;">No inquiries yet.</div>`; return; }
+  el.innerHTML = list.map(i => `
+    <div class="inq-row">
+      <b>${i.dressName} — ${i.name} (${i.email})</b>
+      Size ${i.size} · ${i.dates}${i.message ? ' · "'+i.message+'"' : ''}
+      <div style="opacity:0.5; font-size:0.75rem; margin-top:2px;">${new Date(i.submittedAt).toLocaleString()}</div>
+    </div>
+  `).join('');
+}
+
+renderFilters();
+renderGrid();
+</script>
+</body>
+</html>
